@@ -1,6 +1,7 @@
 package m.kopec.databaseapplication;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -32,6 +33,19 @@ public class MyDBHandler extends SQLiteOpenHelper {
     }
 
     public String loadHandler() {
+        String result = "";
+        String query = "SELECT * FROM " + TABLE_NAME;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        while (cursor.moveToNext()) {
+            int result_0 = cursor.getInt(0);
+            String result_1 = cursor.getString(1);
+            result += String.valueOf(result_0) + " " + result_1 + System.getProperty("line.separator");
+
+        }
+        cursor.close();
+        db.close();
+        return result;
     }
 
     public void addHandler(Student student) {
